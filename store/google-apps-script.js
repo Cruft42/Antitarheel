@@ -14,7 +14,8 @@
  */
 
 // The ID of your Google Sheet
-const SHEET_ID = '1ywNGgTsUSOxHjQiFiW1Xt6qRX5P-jN5NEr_j_pJ3g4s'; // Replace with your actual Sheet ID
+// NOTE: Removed actual Sheet ID for privacy. Replace with your own Sheet ID before deploying.
+const SHEET_ID = 'REPLACE_WITH_SHEET_ID';
 const SHEET_NAME = 'Inventory'; // The name of your sheet tab
 
 /**
