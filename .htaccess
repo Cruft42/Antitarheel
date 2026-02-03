@@ -1,0 +1,56 @@
+# AntiTarheel website .htaccess
+# This file helps resolve common server issues with file uploads
+
+# Enable the rewrite engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Allow HTTP Authorization headers
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+  
+  # Allow all methods for PHP files (fixes 405 Method Not Allowed errors)
+  <FilesMatch "\.php$">
+    <LimitExcept GET POST PUT DELETE OPTIONS>
+      Order Allow,Deny
+      Allow from all
+    </LimitExcept>
+  </FilesMatch>
+</IfModule>
+
+# Set PHP values if allowed by server (may not work on all hosts)
+<IfModule mod_php.c>
+  php_value upload_max_filesize 100M
+  php_value post_max_size 100M
+  php_value memory_limit 512M
+  php_value max_execution_time 600
+  php_value max_input_time 600
+  php_value max_file_uploads 40
+  php_flag display_errors on
+</IfModule>
+
+# Prevent viewing of .htaccess file
+<Files .htaccess>
+  Order Deny,Allow
+  Deny from all
+</Files>
+
+# Prevent directory listings
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "(^\.|\.(bak|config|sql|fla|md|psd|ini|log|sh|inc|swp|dist)|~)$">
+  Order Allow,Deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+
+# Allow CORS for AJAX requests
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+  Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Handle HTTP error responses
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html 

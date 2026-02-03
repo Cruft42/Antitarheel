@@ -1,0 +1,2866 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store - AntiTarheel</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Orbitron:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Additional styles specific to Store page */
+      .store-section {
+        padding: 80px 0;
+      }
+
+      .store-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .store-intro {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .store-intro h3 {
+        font-family: var(--secondary-font);
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--action-green);
+      }
+
+      .store-intro p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        color: var(--wolf-gray);
+      }
+
+      /* Featured Products Slideshow */
+      .featured-products {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-bottom: 60px;
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        padding: 30px;
+        border: 1px solid var(--wolf-gray);
+      }
+
+      .featured-slideshow {
+        flex: 1;
+        min-width: 300px;
+        position: relative;
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .featured-info {
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .featured-info h4 {
+        font-family: var(--secondary-font);
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--action-green);
+      }
+
+      .featured-info p {
+        color: var(--wolf-gray);
+        margin-bottom: 20px;
+        line-height: 1.8;
+      }
+
+      .featured-price {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 25px;
+      }
+
+      .featured-slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .featured-slide.active {
+        opacity: 1;
+      }
+
+      .featured-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 10px;
+      }
+
+      .slide-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+      }
+
+      .slide-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .slide-dot.active {
+        background-color: var(--action-green);
+        transform: scale(1.2);
+      }
+
+      /* Product Grid */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .product-card {
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--wolf-gray);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        border-color: var(--action-green);
+      }
+
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s ease;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 5px;
+      }
+
+      .product-card:hover .product-image img {
+        transform: scale(1.05);
+      }
+
+      .product-details {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-title {
+        font-family: var(--secondary-font);
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--white);
+      }
+
+      .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--action-green);
+        margin-bottom: 15px;
+      }
+
+      .product-description {
+        color: var(--wolf-gray);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        line-height: 1.6;
+        flex-grow: 1;
+      }
+
+      .cart-btn {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .cart-btn:hover {
+        background-color: var(--white);
+        transform: translateY(-3px);
+      }
+
+      /* Responsive Styles */
+      @media screen and (max-width: 768px) {
+        .featured-products {
+          flex-direction: column;
+        }
+
+        .featured-slideshow {
+          height: 300px;
+        }
+      }
+
+      /* Cart Notification */
+      .cart-notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transform: translateX(200%);
+        transition: transform 0.3s ease;
+        font-weight: 600;
+      }
+
+      .cart-notification.show {
+        transform: translateX(0);
+      }
+
+      /* Cart Highlight Animation */
+      @keyframes cartHighlight {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 15px rgba(0, 255, 0, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+        }
+      }
+
+      .cart-highlight {
+        animation: cartHighlight 1s ease-out;
+      }
+
+      /* Product Card Highlight Animation */
+      @keyframes cardHighlight {
+        0% {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px rgba(0, 255, 0, 0.7);
+          border-color: var(--action-green);
+        }
+        50% {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px rgba(0, 255, 0, 0.7);
+          border-color: var(--action-green);
+        }
+        100% {
+          transform: translateY(0);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+          border-color: var(--wolf-gray);
+        }
+      }
+
+      .highlight-card {
+        animation: cardHighlight 2s ease-out;
+      }
+
+      /* Confirmation Popup Styles */
+      .confirmation-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .confirmation-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .confirmation-popup {
+        background-color: rgba(0, 34, 68, 0.95);
+        border: 2px solid var(--action-green);
+        border-radius: 10px;
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 5px 30px rgba(0, 255, 0, 0.3);
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+      }
+
+      .confirmation-overlay.show .confirmation-popup {
+        transform: translateY(0);
+      }
+
+      .confirmation-popup h3 {
+        font-family: var(--secondary-font);
+        color: var(--action-green);
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+      }
+
+      .confirmation-popup p {
+        color: var(--wolf-gray);
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .confirmation-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .confirmation-buttons button {
+        padding: 12px 25px;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .confirm-btn {
+        background-color: var(--action-green);
+        color: var(--college-navy);
+      }
+
+      .confirm-btn:hover {
+        background-color: #00cc6a;
+        transform: translateY(-3px);
+      }
+
+      .cancel-btn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .cancel-btn:hover {
+        background-color: #bd2130;
+        transform: translateY(-3px);
+      }
+
+      /* Cart Icon Animation */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse {
+        animation: pulse 0.5s ease-out;
+      }
+
+      /* Stock Indicator Styles */
+      .stock-indicator {
+        display: inline-block;
+        font-size: 0.8rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-left: 10px;
+        font-weight: normal;
+        vertical-align: middle;
+      }
+
+      .in-stock {
+        background-color: rgba(40, 167, 69, 0.2);
+        color: #28a745;
+      }
+
+      .low-stock {
+        background-color: rgba(255, 193, 7, 0.2);
+        color: #ffc107;
+      }
+
+      .out-of-stock {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+      }
+
+      /* Disabled button style */
+      .cart-btn.disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+
+      .cart-btn.disabled:hover {
+        background-color: #6c757d;
+        transform: none;
+      }
+
+      /* Cart Icon in Navigation */
+      .nav-icons {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+      }
+
+      .help-icon-container {
+        margin-left: 15px;
+        position: relative;
+      }
+
+      #help-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #help-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      .cart-icon-container {
+        position: relative;
+      }
+
+      #cart-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #cart-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      #cart-icon.pulse {
+        animation: pulse 0.5s ease;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+          color: var(--action-green);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        font-size: 0.7rem;
+        font-weight: bold;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      /* Responsive styles for cart icon */
+      @media screen and (max-width: 768px) {
+        .nav-icons {
+          position: absolute;
+          right: 60px;
+          top: 20px;
+        }
+
+        .cart-icon-container {
+          margin-left: 0;
+        }
+      }
+
+      /* Image Zoom Modal */
+      .image-zoom-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 2100;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .image-zoom-modal.show {
+        display: flex;
+        opacity: 1;
+      }
+
+      .zoomed-image-container {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      .zoomed-image {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        border: 1px solid var(--wolf-gray);
+        border-radius: 10px;
+        background-color: rgba(0, 34, 68, 0.8);
+        padding: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .zoom-close-btn {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        background-color: rgba(0, 34, 68, 0.9);
+        color: var(--wolf-gray);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        border: 1px solid var(--wolf-gray);
+        transition: all 0.3s ease;
+      }
+
+      .zoom-close-btn:hover {
+        transform: scale(1.1);
+        color: var(--action-green);
+        border-color: var(--action-green);
+      }
+
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        cursor: zoom-in;
+      }
+
+      /* Image loading spinner */
+      .image-loading-spinner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 34, 68, 0.7);
+        color: var(--action-green);
+        font-size: 2rem;
+        z-index: 1;
+      }
+
+      /* Ensure images maintain aspect ratio */
+      .product-image {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-container">
+      <!-- Background will be added via CSS -->
+    </div>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cart-notification">
+      Item added to cart!
+    </div>
+
+    <!-- Confirmation Popup -->
+    <div class="confirmation-overlay" id="confirmation-overlay">
+      <div class="confirmation-popup">
+        <h3>Clear Your Cart?</h3>
+        <p>
+          Are you sure you want to remove all items from your cart? This action
+          cannot be undone.
+        </p>
+        <div class="confirmation-buttons">
+          <button class="confirm-btn" id="confirm-clear-cart">
+            Yes, Clear Cart
+          </button>
+          <button class="cancel-btn" id="cancel-clear-cart">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Zoom Modal -->
+    <div class="image-zoom-modal" id="image-zoom-modal">
+      <div class="zoomed-image-container">
+        <img
+          src=""
+          alt="Zoomed product image"
+          class="zoomed-image"
+          id="zoomed-image"
+        />
+        <button class="zoom-close-btn" id="zoom-close-btn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <header>
+      <div class="logo">
+        <h1>AntiTarheel</h1>
+      </div>
+      <nav>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="commands.html">Commands</a></li>
+          <li><a href="new-wagers-bay.html">New Wagers Bay</a></li>
+          <li><a href="discord.html">Discord</a></li>
+          <li><a href="store.html" class="active">Store</a></li>
+        </ul>
+        <div class="nav-icons">
+          <div class="cart-icon-container">
+            <a href="#cart-section" id="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </div>
+          <div class="help-icon-container">
+            <a href="contact.html" id="help-icon" title="Help">
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="store-section">
+        <div class="store-container">
+          <div class="store-intro">
+            <h3>Custom Skateboard Decks</h3>
+            <p>
+              Browse our collection of premium custom skateboard decks. Each
+              deck is handcrafted with high-quality materials and unique
+              designs.
+            </p>
+          </div>
+
+          <!-- Featured Products Slideshow -->
+          <div class="featured-products">
+            <div class="featured-slideshow">
+              <div class="featured-slide active">
+                <div class="image-loading-spinner">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <img
+                  src="assets/store/loading.svg"
+                  alt="Loading featured product..."
+                  onerror="handleImageError(this)"
+                  onload="this.parentNode.querySelector('.image-loading-spinner').style.display='none';"
+                />
+              </div>
+              <div class="featured-slide">
+                <div class="image-loading-spinner">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <img
+                  src="assets/store/loading.svg"
+                  alt="Loading featured product..."
+                  onerror="handleImageError(this)"
+                  onload="this.parentNode.querySelector('.image-loading-spinner').style.display='none';"
+                />
+              </div>
+              <div class="featured-slide">
+                <div class="image-loading-spinner">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <img
+                  src="assets/store/loading.svg"
+                  alt="Loading featured product..."
+                  onerror="handleImageError(this)"
+                  onload="this.parentNode.querySelector('.image-loading-spinner').style.display='none';"
+                />
+              </div>
+              <div class="slide-nav">
+                <div class="slide-dot active" data-slide="0"></div>
+                <div class="slide-dot" data-slide="1"></div>
+                <div class="slide-dot" data-slide="2"></div>
+              </div>
+            </div>
+            <div class="featured-info">
+              <h4>Loading Products...</h4>
+              <p>Loading product information from Google Sheets...</p>
+              <div class="featured-price">
+                $0.00
+                <span id="featured-stock" class="stock-indicator in-stock"
+                  >Loading...</span
+                >
+              </div>
+              <button
+                class="btn primary-btn"
+                id="featured-learn-more-btn"
+                disabled
+              >
+                <i class="fas fa-info-circle"></i> Learn More
+              </button>
+            </div>
+          </div>
+
+          <h3
+            style="
+              font-family: var(--secondary-font);
+              color: var(--action-green);
+              margin-bottom: 20px;
+            "
+          >
+            All Products
+          </h3>
+
+          <!-- Product Grid -->
+          <div class="products-grid" id="products-grid">
+            <!-- Products will be dynamically generated here -->
+          </div>
+
+          <!-- Shopping Cart Section -->
+          <div
+            id="cart-section"
+            class="cart-section"
+            style="
+              margin-top: 60px;
+              background-color: rgba(0, 34, 68, 0.8);
+              border-radius: 10px;
+              padding: 30px;
+              border: 1px solid var(--wolf-gray);
+            "
+          >
+            <h3
+              style="
+                font-family: var(--secondary-font);
+                color: var(--action-green);
+                margin-bottom: 20px;
+              "
+            >
+              Your Cart
+            </h3>
+            <div id="cart-items" style="margin-bottom: 20px">
+              <p style="color: var(--wolf-gray)">Your cart is empty.</p>
+            </div>
+            <div
+              id="cart-total"
+              style="
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--white);
+                margin-bottom: 20px;
+              "
+            >
+              Total: $0.00
+            </div>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap">
+              <button
+                id="checkout-btn"
+                class="btn primary-btn"
+                style="display: none"
+              >
+                <i class="fas fa-credit-card"></i> Checkout with PayPal
+              </button>
+              <button
+                id="clear-cart-btn"
+                class="btn secondary-btn"
+                style="display: none"
+              >
+                <i class="fas fa-trash-alt"></i> Clear Cart
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-controls" style="display: none">
+            <button id="refresh-inventory-btn">
+              <i class="fas fa-sync-alt"></i> Refresh Inventory
+            </button>
+            <button id="show-inventory-btn">
+              <i class="fas fa-clipboard-list"></i> Show Inventory
+            </button>
+            <button id="test-images-btn">
+              <i class="fas fa-images"></i> Test Images
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>AntiTarheel</h2>
+          <p>Twitch Streamer & Content Creator</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="commands.html">Commands</a></li>
+            <li><a href="new-wagers-bay.html">New Wagers Bay</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h3>Connect</h3>
+          <div class="social-icons">
+            <a href="https://www.twitch.tv/antitarheel" target="_blank"
+              ><i class="fab fa-twitch"></i
+            ></a>
+            <a href="https://discord.com/invite/yJDmPAMQMy" target="_blank"
+              ><i class="fab fa-discord"></i
+            ></a>
+            <a href="https://www.youtube.com/@Antitarheel" target="_blank"
+              ><i class="fab fa-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 AntiTarheel. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Add this debug section right before the closing body tag -->
+    <div
+      id="debug-panel"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 12px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 9999;
+      "
+    >
+      <h3>Debug Information</h3>
+      <div id="debug-content"></div>
+      <button
+        onclick="document.getElementById('debug-panel').style.display = 'none';"
+      >
+        Close
+      </button>
+      <button
+        onclick="document.getElementById('debug-content').innerHTML = '';"
+      >
+        Clear
+      </button>
+      <button onclick="testSheetConnections()">Test Sheet Connections</button>
+      <button onclick="manuallyCreateFeaturedProducts()">
+        Create Featured Products
+      </button>
+    </div>
+
+    <script>
+      // Add this debug function to the end of your JavaScript
+      function debugLog(message, data) {
+        // Only log to console in development
+        console.log(message, data);
+
+        // Check if debug panel exists before trying to update it
+        const debugContent = document.getElementById("debug-content");
+        if (!debugContent) return;
+
+        const timestamp = new Date().toLocaleTimeString();
+        let logMessage = `<div>[${timestamp}] ${message}</div>`;
+
+        if (data) {
+          if (typeof data === "object") {
+            try {
+              logMessage += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (e) {
+              logMessage += `<pre>[Object cannot be stringified]</pre>`;
+            }
+          } else {
+            logMessage += `<pre>${data}</pre>`;
+          }
+        }
+
+        debugContent.innerHTML += logMessage;
+        debugContent.scrollTop = debugContent.scrollHeight;
+      }
+
+      // Function to test connections to Google Sheets
+      async function testSheetConnections() {
+        debugLog("Starting connection tests...");
+
+        // Test all URLs
+        const urlsToTest = [
+          { name: "PUBLISHED_SHEET_URL", url: PUBLISHED_SHEET_URL },
+          { name: "PUBLISHED_CSV_URL", url: PUBLISHED_CSV_URL },
+          { name: "DIRECT_CSV_URL", url: DIRECT_CSV_URL },
+          {
+            name: "Primary Proxy - PUBLISHED_CSV_URL",
+            url: `${CORS_PROXY_URL}${encodeURIComponent(PUBLISHED_CSV_URL)}`,
+          },
+          {
+            name: "Primary Proxy - DIRECT_CSV_URL",
+            url: `${CORS_PROXY_URL}${encodeURIComponent(DIRECT_CSV_URL)}`,
+          },
+          {
+            name: "Backup Proxy - PUBLISHED_CSV_URL",
+            url: `${CORS_PROXY_URL_BACKUP}${encodeURIComponent(
+              PUBLISHED_CSV_URL
+            )}`,
+          },
+          {
+            name: "Backup Proxy - DIRECT_CSV_URL",
+            url: `${CORS_PROXY_URL_BACKUP}${encodeURIComponent(
+              DIRECT_CSV_URL
+            )}`,
+          },
+        ];
+
+        for (const { name, url } of urlsToTest) {
+          try {
+            debugLog(`Testing ${name}: ${url}`);
+            const response = await fetch(url);
+
+            if (response.ok) {
+              const data = await response.text();
+              const preview = data.substring(0, 100) + "...";
+              debugLog(`✅ ${name} SUCCESS (${response.status})`, preview);
+            } else {
+              debugLog(
+                `❌ ${name} FAILED: HTTP ${response.status} ${response.statusText}`
+              );
+            }
+          } catch (error) {
+            debugLog(`❌ ${name} ERROR: ${error.message}`);
+          }
+        }
+
+        // Test the full inventory fetch process
+        try {
+          debugLog("Testing full inventory fetch process...");
+          const inventory = await fetchInventoryFromSheets();
+
+          if (inventory && Object.keys(inventory).length > 0) {
+            debugLog(
+              `✅ Full inventory fetch SUCCESS: ${
+                Object.keys(inventory).length
+              } products`
+            );
+
+            // Check if featured products exist
+            const featured = inventory["featured"];
+            const featured2 = inventory["featured2"];
+            const featured3 = inventory["featured3"];
+
+            if (featured) {
+              debugLog(`✅ Featured product exists: ${featured.name}`);
+            } else {
+              debugLog(`❌ Featured product does not exist`);
+            }
+
+            if (featured2) {
+              debugLog(`✅ Featured2 product exists: ${featured2.name}`);
+            } else {
+              debugLog(`❌ Featured2 product does not exist`);
+            }
+
+            if (featured3) {
+              debugLog(`✅ Featured3 product exists: ${featured3.name}`);
+            } else {
+              debugLog(`❌ Featured3 product does not exist`);
+            }
+          } else {
+            debugLog("❌ Full inventory fetch FAILED: No products returned");
+          }
+        } catch (error) {
+          debugLog(`❌ Full inventory fetch ERROR: ${error.message}`);
+        }
+      }
+
+      // Add keyboard shortcut to toggle debug panel (Ctrl+Shift+D)
+      document.addEventListener("keydown", function (event) {
+        if (event.ctrlKey && event.shiftKey && event.key === "D") {
+          const debugPanel = document.getElementById("debug-panel");
+          if (debugPanel) {
+            debugPanel.style.display =
+              debugPanel.style.display === "none" ? "block" : "none";
+          }
+        }
+      });
+
+      // Show debug panel on page load for testing - DISABLED
+      document.addEventListener("DOMContentLoaded", function () {
+        // Now that all scripts are loaded, we can safely wrap the refreshInventoryFromSheets function
+        if (typeof refreshInventoryFromSheets === "function") {
+          const originalRefreshInventory = refreshInventoryFromSheets;
+          refreshInventoryFromSheets = async function () {
+            try {
+              const result = await originalRefreshInventory();
+              return result;
+            } catch (error) {
+              console.error(`Inventory refresh error: ${error.message}`);
+              throw error;
+            }
+          };
+        }
+      });
+
+      // Function to manually create featured products
+      function manuallyCreateFeaturedProducts() {
+        if (
+          typeof createFeaturedProducts === "function" &&
+          window.productInventory
+        ) {
+          createFeaturedProducts(window.productInventory);
+
+          // Update the UI
+          if (typeof initializeFeaturedProduct === "function") {
+            initializeFeaturedProduct();
+          }
+
+          if (typeof updateFeaturedInfoForSlide === "function") {
+            updateFeaturedInfoForSlide(0);
+          }
+        }
+      }
+    </script>
+
+    <!-- Define handleImageError function first -->
+    <script>
+      // Function to handle image loading errors - defined in global scope
+      function handleImageError(img) {
+        // Default fallback image paths
+        const defaultDeckDataUrl = "assets/store/default-deck.svg";
+        const defaultFeaturedDataUrl = "assets/store/default-featured.svg";
+
+        // Check if the product has a fallback image
+        const productId = img
+          .closest(".product-card")
+          ?.id?.replace("product-", "");
+        if (productId) {
+          const product = getProductDetails(productId);
+          if (product && product.fallbackImage) {
+            img.src = product.fallbackImage;
+          } else {
+            // Use a generic fallback
+            img.src = defaultDeckDataUrl;
+          }
+        } else if (img.closest(".featured-slide")) {
+          // This is a featured product image
+          const featuredProduct = getProductDetails("featured");
+          if (featuredProduct && featuredProduct.fallbackImage) {
+            img.src = featuredProduct.fallbackImage;
+          } else {
+            // Use a generic fallback
+            img.src = defaultFeaturedDataUrl;
+          }
+        } else {
+          // Default fallback for any other images
+          img.src = defaultDeckDataUrl;
+        }
+      }
+
+      // Function to check if inventory is loaded
+      function checkInventoryLoaded() {
+        return (
+          window.productInventory &&
+          Object.keys(window.productInventory).length > 0
+        );
+      }
+
+      // Function to get product details by ID
+      function getProductDetails(productId) {
+        if (!window.productInventory) return null;
+        return window.productInventory[productId] || null;
+      }
+
+      // Function to get all products
+      function getAllProducts() {
+        if (!window.productInventory) return [];
+        return Object.values(window.productInventory);
+      }
+
+      // Function to get stock level for a product
+      function getStockLevel(productId) {
+        const product = getProductDetails(productId);
+        return product ? product.stock : 0;
+      }
+
+      // Function to decrease stock level
+      function decreaseStock(productId, quantity) {
+        const product = getProductDetails(productId);
+        if (!product) return false;
+
+        // Ensure stock is a number
+        let currentStock = parseInt(product.stock) || 0;
+
+        // Check if enough stock is available
+        if (currentStock < quantity) return false;
+
+        // Decrease stock
+        product.stock = currentStock - quantity;
+
+        return true;
+      }
+
+      // Function to increase stock level
+      function increaseStock(productId, quantity) {
+        const product = getProductDetails(productId);
+        if (!product) return false;
+
+        // Ensure stock is a number
+        let currentStock = parseInt(product.stock) || 0;
+
+        // Increase stock
+        product.stock = currentStock + quantity;
+
+        return true;
+      }
+
+      // Function to check if a product is in stock
+      function isInStock(productId) {
+        const stockLevel = getStockLevel(productId);
+        return stockLevel > 0;
+      }
+    </script>
+
+    <script src="script.js"></script>
+    <script src="inventory.js"></script>
+    <script src="sheets-inventory.js"></script>
+    <!-- PayPal SDK will be loaded dynamically when needed -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if inventory is loaded, if not, try to load it
+        function checkAndLoadInventory() {
+          // Always refresh from Google Sheets on page load
+          // Clear any cached data
+          localStorage.removeItem("sheetsInventoryCache");
+          localStorage.removeItem("productInventory");
+          localStorage.removeItem("lastFetchTime");
+
+          // Reset the inventory object
+          window.productInventory = {};
+
+          // Check if the function exists before calling it
+          if (typeof refreshInventoryFromSheets === "function") {
+            return refreshInventoryFromSheets();
+          } else {
+            console.error("refreshInventoryFromSheets function not defined");
+
+            // Use default inventory as fallback
+            if (typeof defaultInventory !== "undefined") {
+              window.productInventory = defaultInventory;
+              return Promise.resolve(true);
+            } else {
+              return Promise.resolve(false);
+            }
+          }
+        }
+
+        // Wait a short time to ensure all scripts are loaded
+        setTimeout(() => {
+          // Force refresh from Google Sheets on page load
+          checkAndLoadInventory()
+            .then((success) => {
+              if (success) {
+                // Check if we have products
+                if (checkInventoryLoaded()) {
+                  // Initialize product grid after refresh
+                  initializeProductGrid();
+
+                  // Update featured product stock display
+                  updateFeaturedProductStock();
+
+                  // Initialize featured product details
+                  initializeFeaturedProduct();
+
+                  // Set the initial featured product ID on the buy button
+                  const featuredBuyBtn = document.getElementById(
+                    "featured-learn-more-btn"
+                  );
+                  if (featuredBuyBtn) {
+                    featuredBuyBtn.setAttribute("data-product-id", "featured");
+                  }
+
+                  // Initialize the featured info for the first slide
+                  updateFeaturedInfoForSlide(0);
+
+                  // Test image URLs
+                  testInventoryImages();
+                } else {
+                  showNotification("Error: No products found in inventory");
+                }
+              } else {
+                showNotification("Error: Failed to load inventory");
+              }
+            })
+            .catch((error) => {
+              console.error("Error loading inventory:", error);
+
+              // Initialize with local inventory as fallback
+              initializeProductGrid();
+              updateFeaturedProductStock();
+              initializeFeaturedProduct();
+            });
+        }, 500); // Wait 500ms to ensure scripts are loaded
+
+        // Add a function to initialize the featured product
+        function initializeFeaturedProduct() {
+          const featuredProduct = getProductDetails("featured");
+          if (featuredProduct) {
+            // Get references to the elements
+            const featuredName = document.querySelector(".featured-info h4");
+            const featuredPrice = document.querySelector(
+              ".featured-info .featured-price"
+            );
+            const featuredDesc = document.querySelector(".featured-info p");
+            const featuredImage = document.querySelector(
+              ".featured-slide.active img"
+            );
+
+            // Update the elements if they exist
+            if (featuredName) featuredName.textContent = featuredProduct.name;
+            if (featuredPrice) {
+              // Keep the stock indicator if it exists
+              const stockIndicator =
+                featuredPrice.querySelector(".stock-indicator");
+
+              // Ensure price is a number and format it properly
+              let price = 0;
+              if (typeof featuredProduct.price === "number") {
+                price = featuredProduct.price;
+              } else if (typeof featuredProduct.price === "string") {
+                price = parseFloat(featuredProduct.price) || 0;
+              }
+
+              featuredPrice.textContent = `$${price.toFixed(2)} `;
+              if (stockIndicator) featuredPrice.appendChild(stockIndicator);
+            }
+            if (featuredDesc && featuredProduct.description) {
+              featuredDesc.textContent = featuredProduct.description;
+            }
+            if (featuredImage) {
+              // Hide loading spinner after image loads
+              featuredImage.onload = function () {
+                const spinner = this.parentNode.querySelector(
+                  ".image-loading-spinner"
+                );
+                if (spinner) {
+                  spinner.style.display = "none";
+                }
+              };
+
+              // Set image source
+              featuredImage.src =
+                validateImageUrl(featuredProduct.image) ||
+                "assets/store/featured-deck1.jpg";
+              featuredImage.alt = featuredProduct.name;
+              featuredImage.onerror = function () {
+                handleImageError(this);
+              };
+            }
+
+            // Update stock display
+            updateFeaturedProductStock();
+
+            // Update the other slideshow images with featured2 and featured3
+            const featured2 = getProductDetails("featured2");
+            const featured3 = getProductDetails("featured3");
+
+            const slideImages = document.querySelectorAll(
+              ".featured-slide:not(.active) img"
+            );
+
+            if (featured2 && slideImages[0]) {
+              // Hide loading spinner after image loads
+              slideImages[0].onload = function () {
+                const spinner = this.parentNode.querySelector(
+                  ".image-loading-spinner"
+                );
+                if (spinner) {
+                  spinner.style.display = "none";
+                }
+              };
+
+              // Set image source
+              slideImages[0].src =
+                validateImageUrl(featured2.image) ||
+                "assets/store/featured-deck2.jpg";
+              slideImages[0].alt = featured2.name;
+              slideImages[0].onerror = function () {
+                handleImageError(this);
+              };
+            }
+
+            if (featured3 && slideImages[1]) {
+              // Hide loading spinner after image loads
+              slideImages[1].onload = function () {
+                const spinner = this.parentNode.querySelector(
+                  ".image-loading-spinner"
+                );
+                if (spinner) {
+                  spinner.style.display = "none";
+                }
+              };
+
+              // Set image source
+              slideImages[1].src =
+                validateImageUrl(featured3.image) ||
+                "assets/store/featured-deck3.jpg";
+              slideImages[1].alt = featured3.name;
+              slideImages[1].onerror = function () {
+                handleImageError(this);
+              };
+            }
+          }
+        }
+
+        // Featured Products Slideshow
+        const slides = document.querySelectorAll(".featured-slide");
+        const dots = document.querySelectorAll(".slide-dot");
+        let currentSlide = 0;
+        let slideInterval;
+
+        // Start automatic slideshow
+        startSlideshow();
+
+        // Click event for slide dots
+        dots.forEach((dot) => {
+          dot.addEventListener("click", function () {
+            const slideIndex = parseInt(this.getAttribute("data-slide"));
+            showSlide(slideIndex);
+          });
+        });
+
+        // Cart icon click event
+        document
+          .getElementById("cart-icon")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            const cartSection = document.getElementById("cart-section");
+            cartSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+            // Highlight the cart section
+            highlightCartSection();
+          });
+
+        // Featured product learn more button
+        const featuredBuyBtn = document.getElementById(
+          "featured-learn-more-btn"
+        );
+        featuredBuyBtn.addEventListener("click", function () {
+          const productId = this.getAttribute("data-product-id") || "featured";
+          const product = getProductDetails(productId);
+
+          if (product) {
+            // Find the corresponding product card
+            const productCard = document.getElementById(`product-${productId}`);
+
+            if (productCard) {
+              // Scroll to the product card
+              productCard.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+
+              // Highlight the product card
+              productCard.classList.add("highlight-card");
+
+              // Remove highlight after animation completes
+              setTimeout(() => {
+                productCard.classList.remove("highlight-card");
+              }, 2000);
+            } else {
+              // If product card not found, scroll to products grid
+              document
+                .getElementById("products-grid")
+                .scrollIntoView({ behavior: "smooth" });
+            }
+          }
+        });
+
+        // Shopping cart functionality
+        let cart = [];
+        const cartItems = document.getElementById("cart-items");
+        const cartTotal = document.getElementById("cart-total");
+        const checkoutBtn = document.getElementById("checkout-btn");
+        const clearCartBtn = document.getElementById("clear-cart-btn");
+        const cartCount = document.getElementById("cart-count");
+
+        // Load cart from localStorage if available
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+          cart = JSON.parse(savedCart);
+          updateCartDisplay();
+        }
+
+        // Checkout button
+        checkoutBtn.addEventListener("click", function () {
+          // Process the order and update inventory
+          processOrder();
+        });
+
+        // Clear cart button
+        clearCartBtn.addEventListener("click", function () {
+          // Show the confirmation popup
+          const confirmationOverlay = document.getElementById(
+            "confirmation-overlay"
+          );
+          confirmationOverlay.classList.add("show");
+        });
+
+        // Confirm clear cart button
+        document
+          .getElementById("confirm-clear-cart")
+          .addEventListener("click", function () {
+            // Return items to inventory
+            cart.forEach((item) => {
+              increaseStock(item.id, item.quantity);
+            });
+
+            cart = [];
+            updateCartDisplay();
+
+            // Update product displays
+            updateFeaturedProductStock();
+            updateProductGrid();
+
+            // Hide the confirmation popup
+            document
+              .getElementById("confirmation-overlay")
+              .classList.remove("show");
+
+            // Show notification
+            showNotification("Your cart has been cleared");
+          });
+
+        // Cancel clear cart button
+        document
+          .getElementById("cancel-clear-cart")
+          .addEventListener("click", function () {
+            // Hide the confirmation popup
+            document
+              .getElementById("confirmation-overlay")
+              .classList.remove("show");
+          });
+
+        // Function to start slideshow
+        function startSlideshow() {
+          slideInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+          }, 5000);
+        }
+
+        // Function to show a specific slide
+        function showSlide(index) {
+          // Clear the current interval
+          clearInterval(slideInterval);
+
+          // Hide all slides and remove active class from dots
+          slides.forEach((slide) => slide.classList.remove("active"));
+          dots.forEach((dot) => dot.classList.remove("active"));
+
+          // Show the selected slide and activate the corresponding dot
+          slides[index].classList.add("active");
+          dots[index].classList.add("active");
+
+          // Update current slide index
+          currentSlide = index;
+
+          // Update featured product info based on the current slide
+          updateFeaturedInfoForSlide(index);
+
+          // Update the product grid to ensure stock levels are consistent
+          updateProductGrid();
+
+          // Restart the slideshow
+          startSlideshow();
+        }
+
+        // Function to update the featured product info based on the current slide
+        function updateFeaturedInfoForSlide(index) {
+          // Get references to the elements
+          const featuredName = document.querySelector(".featured-info h4");
+          const featuredPrice = document.querySelector(
+            ".featured-info .featured-price"
+          );
+          const featuredDesc = document.querySelector(".featured-info p");
+          const featuredBuyBtn = document.getElementById(
+            "featured-learn-more-btn"
+          );
+
+          let product;
+          let productId;
+
+          // Get the appropriate product based on the slide index
+          if (index === 0) {
+            productId = "featured";
+          } else if (index === 1) {
+            productId = "featured2";
+          } else if (index === 2) {
+            productId = "featured3";
+          }
+
+          // Get the product from the inventory
+          product = getProductDetails(productId);
+
+          if (product) {
+            // Update the elements if they exist
+            if (featuredName) featuredName.textContent = product.name;
+            if (featuredPrice) {
+              // Keep the stock indicator if it exists
+              const stockIndicator =
+                featuredPrice.querySelector(".stock-indicator");
+
+              // Ensure price is a number and format it properly
+              let price = 0;
+              if (typeof product.price === "number") {
+                price = product.price;
+              } else if (typeof product.price === "string") {
+                price = parseFloat(product.price) || 0;
+              }
+
+              featuredPrice.textContent = `$${price.toFixed(2)} `;
+              if (stockIndicator) featuredPrice.appendChild(stockIndicator);
+            }
+            if (featuredDesc && product.description) {
+              featuredDesc.textContent = product.description;
+            }
+
+            // Update the buy button to use the correct product ID
+            if (featuredBuyBtn) {
+              featuredBuyBtn.setAttribute("data-product-id", product.id);
+            }
+
+            // Update stock display for the current featured product
+            updateFeaturedProductStock(product.id);
+          }
+        }
+
+        // Function to initialize the product grid
+        function initializeProductGrid() {
+          const productsGrid = document.getElementById("products-grid");
+          productsGrid.innerHTML = ""; // Clear existing content
+
+          // Get all products except featured, featured2, and featured3
+          const products = getAllProducts().filter(
+            (product) =>
+              product.id !== "featured" &&
+              product.id !== "featured2" &&
+              product.id !== "featured3"
+          );
+
+          console.log("Products to display:", products);
+
+          // Create a product card for each product
+          products.forEach((product) => {
+            const productCard = createProductCard(product);
+            productsGrid.appendChild(productCard);
+          });
+
+          // If no products were found, show a message
+          if (products.length === 0) {
+            const noProductsMessage = document.createElement("div");
+            noProductsMessage.className = "no-products-message";
+            noProductsMessage.textContent =
+              "No products found. Please check your inventory configuration.";
+            productsGrid.appendChild(noProductsMessage);
+          }
+        }
+
+        // Function to validate and format image URLs
+        function validateImageUrl(url) {
+          if (!url) return null;
+
+          // Trim whitespace
+          url = url.trim();
+
+          // If empty after trimming, return null
+          if (!url) return null;
+
+          // Check if it's a Google Drive sharing URL and convert it
+          if (url.includes("drive.google.com/file/d/")) {
+            // Extract file ID from Google Drive URL
+            const fileIdMatch = url.match(/\/file\/d\/([^\/]+)/);
+            if (fileIdMatch && fileIdMatch[1]) {
+              const fileId = fileIdMatch[1];
+              return `https://drive.google.com/uc?export=view&id=${fileId}`;
+            }
+          }
+
+          // Check if it's a Google Drive open URL
+          if (url.includes("drive.google.com/open")) {
+            const fileIdMatch = url.match(/[?&]id=([^&]+)/);
+            if (fileIdMatch && fileIdMatch[1]) {
+              const fileId = fileIdMatch[1];
+              return `https://drive.google.com/uc?export=view&id=${fileId}`;
+            }
+          }
+
+          // If it's already a properly formatted URL, return it as is
+          return url;
+        }
+
+        // Function to create a product card
+        function createProductCard(product) {
+          const productCard = document.createElement("div");
+          productCard.className = "product-card";
+          productCard.id = `product-${product.id}`;
+
+          // Determine stock status and CSS class
+          let stockStatus = "";
+          let stockClass = "";
+
+          // Ensure stock is a number
+          const stockLevel = parseInt(product.stock) || 0;
+
+          if (stockLevel <= 0) {
+            stockStatus = "Out of Stock";
+            stockClass = "out-of-stock";
+          } else if (stockLevel <= 3) {
+            stockStatus = `Low Stock (${stockLevel})`;
+            stockClass = "low-stock";
+          } else {
+            stockStatus = `In Stock (${stockLevel})`;
+            stockClass = "in-stock";
+          }
+
+          // Get product description from the product object or use a default
+          const productDescription =
+            product.description || getProductDescription(product.id);
+
+          // Ensure price is a number and format it properly
+          let price = 0;
+          if (typeof product.price === "number") {
+            price = product.price;
+          } else if (typeof product.price === "string") {
+            price = parseFloat(product.price) || 0;
+          }
+
+          // Create the product card HTML
+          productCard.innerHTML = `
+            <div class="product-image">
+              <div class="image-loading-spinner" id="loading-${product.id}">
+                <i class="fas fa-spinner fa-spin"></i>
+              </div>
+              <img 
+                src="${
+                  validateImageUrl(product.image) ||
+                  `assets/store/deck${product.id}.jpg`
+                }" 
+                alt="${product.name}" 
+                onerror="handleImageError(this)" 
+                onload="this.parentNode.querySelector('.image-loading-spinner').style.display='none';"
+              />
+            </div>
+            <div class="product-details">
+              <h4 class="product-title">${product.name}</h4>
+              <div class="product-price">
+                $${price.toFixed(2)}
+                <span class="stock-indicator ${stockClass}">${stockStatus}</span>
+              </div>
+              <p class="product-description">
+                ${productDescription}
+              </p>
+              <button
+                class="cart-btn ${stockLevel <= 0 ? "disabled" : ""}"
+                data-id="${product.id}"
+                data-name="${product.name}"
+                data-price="${price}"
+                ${stockLevel <= 0 ? "disabled" : ""}
+              >
+                <i class="fas fa-shopping-cart"></i> ${
+                  stockLevel <= 0 ? "Out of Stock" : "Add to Cart"
+                }
+              </button>
+            </div>
+          `;
+
+          // Add event listener to the Add to Cart button if in stock
+          if (stockLevel > 0) {
+            const addButton = productCard.querySelector(".cart-btn");
+            addButton.addEventListener("click", function () {
+              const productData = {
+                id: this.getAttribute("data-id"),
+                name: this.getAttribute("data-name"),
+                price: parseFloat(this.getAttribute("data-price")),
+              };
+              addToCart(productData);
+
+              // Update the product grid to reflect new stock levels
+              updateProductGrid();
+            });
+          }
+
+          // Add event listener to the product image for zoom functionality
+          const productImage = productCard.querySelector(".product-image img");
+          productImage.addEventListener("click", function () {
+            zoomImage(this.src, product.name);
+          });
+
+          return productCard;
+        }
+
+        // Function to get product description (placeholder)
+        function getProductDescription(productId) {
+          // First check if the product exists and has a description
+          const product = getProductDetails(productId);
+          if (product && product.description) {
+            return product.description;
+          }
+
+          // If no description is found, return a generic message
+          return "No description available.";
+        }
+
+        // Function to update the product grid
+        function updateProductGrid() {
+          const products = getAllProducts().filter(
+            (product) =>
+              product.id !== "featured" &&
+              product.id !== "featured2" &&
+              product.id !== "featured3"
+          );
+
+          products.forEach((product) => {
+            const productCard = document.getElementById(
+              `product-${product.id}`
+            );
+            if (productCard) {
+              // Update stock indicator
+              let stockStatus = "";
+              let stockClass = "";
+
+              // Ensure stock is a number
+              const stockLevel = parseInt(product.stock) || 0;
+
+              if (stockLevel <= 0) {
+                stockStatus = "Out of Stock";
+                stockClass = "out-of-stock";
+              } else if (stockLevel <= 3) {
+                stockStatus = `Low Stock (${stockLevel})`;
+                stockClass = "low-stock";
+              } else {
+                stockStatus = `In Stock (${stockLevel})`;
+                stockClass = "in-stock";
+              }
+
+              const stockIndicator =
+                productCard.querySelector(".stock-indicator");
+              if (stockIndicator) {
+                stockIndicator.textContent = stockStatus;
+                stockIndicator.className = `stock-indicator ${stockClass}`;
+              }
+
+              // Update button state
+              const addButton = productCard.querySelector(".cart-btn");
+              if (addButton) {
+                if (stockLevel <= 0) {
+                  addButton.classList.add("disabled");
+                  addButton.disabled = true;
+                  addButton.innerHTML =
+                    '<i class="fas fa-shopping-cart"></i> Out of Stock';
+                } else {
+                  addButton.classList.remove("disabled");
+                  addButton.disabled = false;
+                  addButton.innerHTML =
+                    '<i class="fas fa-shopping-cart"></i> Add to Cart';
+                }
+              }
+            }
+          });
+        }
+
+        // Function to update featured product stock display
+        function updateFeaturedProductStock(productId = "featured") {
+          const featuredStock = document.getElementById("featured-stock");
+          const featuredBuyBtn = document.getElementById(
+            "featured-learn-more-btn"
+          );
+          const stockLevel = parseInt(getStockLevel(productId)) || 0;
+
+          let stockStatus = "";
+          let stockClass = "";
+
+          if (stockLevel <= 0) {
+            stockStatus = "Out of Stock";
+            stockClass = "out-of-stock";
+            featuredBuyBtn.classList.add("disabled");
+            featuredBuyBtn.disabled = true;
+            featuredBuyBtn.innerHTML =
+              '<i class="fas fa-info-circle"></i> Learn More';
+          } else if (stockLevel <= 3) {
+            stockStatus = `Low Stock (${stockLevel})`;
+            stockClass = "low-stock";
+            featuredBuyBtn.classList.remove("disabled");
+            featuredBuyBtn.disabled = false;
+            featuredBuyBtn.innerHTML =
+              '<i class="fas fa-info-circle"></i> Learn More';
+          } else {
+            stockStatus = `In Stock (${stockLevel})`;
+            stockClass = "in-stock";
+            featuredBuyBtn.classList.remove("disabled");
+            featuredBuyBtn.disabled = false;
+            featuredBuyBtn.innerHTML =
+              '<i class="fas fa-info-circle"></i> Learn More';
+          }
+
+          featuredStock.textContent = stockStatus;
+          featuredStock.className = `stock-indicator ${stockClass}`;
+
+          // Set the product ID on the button
+          featuredBuyBtn.setAttribute("data-product-id", productId);
+        }
+
+        // Function to add a product to the cart
+        function addToCart(product) {
+          // Check if product is in stock
+          if (!isInStock(product.id)) {
+            showNotification(`Sorry, ${product.name} is out of stock.`);
+            return;
+          }
+
+          // Decrease stock level
+          if (!decreaseStock(product.id, 1)) {
+            showNotification(`Sorry, ${product.name} is out of stock.`);
+            return;
+          }
+
+          // Check if product is already in cart
+          const existingProduct = cart.find((item) => item.id === product.id);
+
+          if (existingProduct) {
+            // Increase quantity if product already exists
+            existingProduct.quantity += 1;
+          } else {
+            // Add new product to cart
+            cart.push({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              quantity: 1,
+            });
+          }
+
+          // Show notification
+          showNotification(`${product.name} added to cart!`);
+
+          // Pulse the cart icon
+          pulseCartIcon();
+
+          // Update cart display
+          updateCartDisplay();
+
+          // Update the product grid to reflect new stock levels
+          updateProductGrid();
+
+          // Update all featured slides in case the same product is shown in multiple places
+          updateFeaturedInfoForSlide(currentSlide);
+        }
+
+        // Function to process the order
+        function processOrder() {
+          // Check if cart is empty
+          if (cart.length === 0) {
+            showNotification("Your cart is empty!");
+            return;
+          }
+
+          // Calculate the total amount
+          let totalAmount = 0;
+          cart.forEach((item) => {
+            totalAmount += item.price * item.quantity;
+          });
+
+          // Format for PayPal (2 decimal places)
+          totalAmount = parseFloat(totalAmount.toFixed(2));
+
+          // Prepare the purchased items for updating inventory
+          const purchasedItems = cart.map((item) => ({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          }));
+
+          // Show processing notification
+          showNotification("Preparing checkout...");
+
+          // Create a modal for PayPal checkout
+          const paypalModal = document.createElement("div");
+          paypalModal.className = "paypal-modal";
+          paypalModal.innerHTML = `
+            <div class="paypal-modal-content">
+              <div class="paypal-modal-header">
+                <h3>Complete Your Purchase</h3>
+                <button class="paypal-close-btn">&times;</button>
+              </div>
+              <div class="paypal-modal-body">
+                <p>Total: $${totalAmount}</p>
+                <div id="paypal-button-container"></div>
+                <div id="paypal-loading" style="text-align: center; color: var(--wolf-gray);">
+                  <p>Loading payment options...</p>
+                </div>
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--wolf-gray);">
+                  <p style="color: var(--wolf-gray); margin-bottom: 15px;">Or use test payment (no login required)</p>
+                  <button id="test-payment-btn" style="background-color: var(--action-green); color: var(--college-navy); border: none; padding: 12px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
+                    Complete Test Payment
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Add styles for the PayPal modal
+          const modalStyles = document.createElement("style");
+          modalStyles.textContent = `
+            .paypal-modal {
+              display: flex;
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.7);
+              z-index: 2200;
+              justify-content: center;
+              align-items: center;
+            }
+            .paypal-modal-content {
+              background-color: rgba(0, 34, 68, 0.95);
+              border: 2px solid var(--action-green);
+              border-radius: 10px;
+              width: 90%;
+              max-width: 500px;
+              box-shadow: 0 5px 30px rgba(0, 255, 0, 0.3);
+            }
+            .paypal-modal-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 15px 20px;
+              border-bottom: 1px solid var(--wolf-gray);
+            }
+            .paypal-modal-header h3 {
+              font-family: var(--secondary-font);
+              color: var(--action-green);
+              margin: 0;
+            }
+            .paypal-close-btn {
+              background: none;
+              border: none;
+              color: var(--wolf-gray);
+              font-size: 1.5rem;
+              cursor: pointer;
+              transition: color 0.3s ease;
+            }
+            .paypal-close-btn:hover {
+              color: var(--action-green);
+            }
+            .paypal-modal-body {
+              padding: 20px;
+            }
+            .paypal-modal-body p {
+              color: var(--white);
+              font-size: 1.2rem;
+              margin-bottom: 20px;
+              text-align: center;
+            }
+            #paypal-button-container {
+              min-height: 150px;
+            }
+          `;
+
+          document.head.appendChild(modalStyles);
+          document.body.appendChild(paypalModal);
+
+          // Close button functionality
+          const closeBtn = paypalModal.querySelector(".paypal-close-btn");
+          closeBtn.addEventListener("click", function () {
+            document.body.removeChild(paypalModal);
+            showNotification("Checkout cancelled");
+          });
+
+          // Test payment button functionality
+          const testPaymentBtn = document.getElementById("test-payment-btn");
+          testPaymentBtn.addEventListener("click", function () {
+            // Show processing message
+            testPaymentBtn.textContent = "Processing...";
+            testPaymentBtn.disabled = true;
+
+            // Simulate payment processing delay
+            setTimeout(() => {
+              // Update inventory
+              updateGoogleSheetsInventory(purchasedItems)
+                .then((success) => {
+                  // Clear the cart regardless of inventory update success
+                  cart = [];
+                  updateCartDisplay();
+
+                  // Update product displays
+                  updateFeaturedProductStock();
+                  updateProductGrid();
+
+                  // Show success notification
+                  showNotification(
+                    "Test payment successful! Thank you for your purchase."
+                  );
+
+                  // Close the PayPal modal
+                  document.body.removeChild(paypalModal);
+                })
+                .catch((error) => {
+                  // Even if there's an error updating inventory, still complete the purchase
+                  cart = [];
+                  updateCartDisplay();
+
+                  // Update product displays
+                  updateFeaturedProductStock();
+                  updateProductGrid();
+
+                  // Show success notification
+                  showNotification(
+                    "Test payment successful! Thank you for your purchase."
+                  );
+
+                  // Close the PayPal modal
+                  document.body.removeChild(paypalModal);
+                });
+            }, 1500);
+          });
+
+          // Load PayPal SDK dynamically
+          const loadPayPalSDK = () => {
+            return new Promise((resolve, reject) => {
+              // Check if PayPal SDK is already loaded
+              if (window.paypal) {
+                resolve(window.paypal);
+                return;
+              }
+
+              // Create script element
+              const script = document.createElement("script");
+
+              // IMPORTANT: For production, replace 'test' with your actual PayPal client ID
+              // You can get this from the PayPal Developer Dashboard: https://developer.paypal.com/dashboard/
+              const clientId = "test"; // Replace with your actual client ID for production
+
+              script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
+              script.async = true;
+
+              // Set up load and error handlers
+              script.onload = () => {
+                if (window.paypal) {
+                  resolve(window.paypal);
+                } else {
+                  reject(new Error("PayPal SDK loaded but not available"));
+                }
+              };
+
+              script.onerror = () => {
+                reject(new Error("Failed to load PayPal SDK"));
+              };
+
+              // Add script to document
+              document.body.appendChild(script);
+            });
+          };
+
+          // Hide loading message when PayPal is ready
+          const hideLoading = () => {
+            const loadingElement = document.getElementById("paypal-loading");
+            if (loadingElement) {
+              loadingElement.style.display = "none";
+            }
+          };
+
+          // Show PayPal error message
+          const showPayPalError = (message) => {
+            const paypalContainer = document.getElementById(
+              "paypal-button-container"
+            );
+            if (paypalContainer) {
+              paypalContainer.innerHTML = `
+                <div style="text-align: center; color: #dc3545; padding: 10px; margin-bottom: 15px;">
+                  <p>${message}</p>
+                  <p style="margin-top: 5px; font-size: 0.9rem;">Please use the test payment option below.</p>
+                </div>
+              `;
+            }
+
+            const loadingElement = document.getElementById("paypal-loading");
+            if (loadingElement) {
+              loadingElement.style.display = "none";
+            }
+
+            // Highlight the test payment section
+            const testPaymentSection = document.querySelector(
+              ".paypal-modal-body > div:last-child"
+            );
+            if (testPaymentSection) {
+              testPaymentSection.style.backgroundColor = "rgba(0, 255, 0, 0.1)";
+              testPaymentSection.style.padding = "15px";
+              testPaymentSection.style.borderRadius = "5px";
+            }
+          };
+
+          // Load PayPal SDK and render buttons
+          loadPayPalSDK()
+            .then((paypal) => {
+              hideLoading();
+
+              // Create PayPal buttons
+              try {
+                paypal
+                  .Buttons({
+                    createOrder: function (data, actions) {
+                      // Set up the transaction
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: totalAmount,
+                            },
+                            description: "AntiTarheel Store Purchase",
+                          },
+                        ],
+                      });
+                    },
+                    onApprove: function (data, actions) {
+                      // Capture the funds from the transaction
+                      return actions.order.capture().then(function (details) {
+                        // Update inventory
+                        updateGoogleSheetsInventory(purchasedItems)
+                          .then((success) => {
+                            // Clear the cart
+                            cart = [];
+                            updateCartDisplay();
+
+                            // Update product displays
+                            updateFeaturedProductStock();
+                            updateProductGrid();
+
+                            // Show success notification
+                            showNotification(
+                              "Payment successful! Thank you for your purchase."
+                            );
+
+                            // Close the PayPal modal
+                            document.body.removeChild(paypalModal);
+                          })
+                          .catch((error) => {
+                            // Even if there's an error updating inventory, still complete the purchase
+                            cart = [];
+                            updateCartDisplay();
+
+                            // Update product displays
+                            updateFeaturedProductStock();
+                            updateProductGrid();
+
+                            // Show success notification
+                            showNotification(
+                              "Payment successful! Thank you for your purchase."
+                            );
+
+                            // Close the PayPal modal
+                            document.body.removeChild(paypalModal);
+                          });
+                      });
+                    },
+                    onError: function (err) {
+                      showNotification(
+                        "There was an error processing your payment. Please try the test payment option."
+                      );
+                      showPayPalError(
+                        "There was an error with PayPal. Please use the test payment option below."
+                      );
+                    },
+                  })
+                  .render("#paypal-button-container");
+              } catch (error) {
+                showPayPalError("Unable to load PayPal payment options.");
+              }
+            })
+            .catch((error) => {
+              showPayPalError("Unable to connect to PayPal services.");
+              showNotification(
+                "PayPal unavailable. Please use the test payment option."
+              );
+            });
+        }
+
+        // Function to pulse the cart icon
+        function pulseCartIcon() {
+          const cartIcon = document.getElementById("cart-icon");
+          cartIcon.classList.add("pulse");
+
+          // Remove the pulse class after animation completes
+          setTimeout(() => {
+            cartIcon.classList.remove("pulse");
+          }, 500);
+        }
+
+        // Function to show notification
+        function showNotification(message) {
+          const notification = document.getElementById("cart-notification");
+          notification.textContent = message;
+          notification.classList.add("show");
+
+          // Hide notification after 3 seconds
+          setTimeout(() => {
+            notification.classList.remove("show");
+          }, 3000);
+        }
+
+        // Function to highlight the cart section
+        function highlightCartSection() {
+          const cartSection = document.querySelector(".cart-section");
+          cartSection.classList.add("cart-highlight");
+
+          // Scroll to cart section
+          cartSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Remove highlight class after animation completes
+          setTimeout(() => {
+            cartSection.classList.remove("cart-highlight");
+          }, 1000);
+        }
+
+        // Function to update the cart display
+        function updateCartDisplay() {
+          if (cart.length === 0) {
+            cartItems.innerHTML =
+              '<p style="color: var(--wolf-gray);">Your cart is empty.</p>';
+            cartTotal.textContent = "Total: $0.00";
+            checkoutBtn.style.display = "none";
+            clearCartBtn.style.display = "none";
+            cartCount.textContent = "0";
+
+            // Clear cart in localStorage
+            localStorage.removeItem("cart");
+          } else {
+            let cartHTML = '<ul style="list-style: none; padding: 0;">';
+            let total = 0;
+            let itemCount = 0;
+
+            cart.forEach((item) => {
+              const itemTotal = item.price * item.quantity;
+              total += itemTotal;
+              itemCount += item.quantity;
+
+              cartHTML += `
+                <li style="display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--wolf-gray); padding-bottom: 10px; border-bottom: 1px solid rgba(165, 172, 175, 0.3);">
+                  <div>
+                    <span style="color: var(--white);">${item.name}</span>
+                    <div style="margin-top: 5px; display: flex; align-items: center;">
+                      <button class="quantity-btn minus" data-id="${
+                        item.id
+                      }" style="background: none; border: none; color: var(--wolf-gray); cursor: pointer; font-size: 0.9rem;">
+                        <i class="fas fa-minus-circle"></i>
+                      </button>
+                      <span style="margin: 0 8px; font-size: 0.9rem;">x${
+                        item.quantity
+                      }</span>
+                      <button class="quantity-btn plus" data-id="${
+                        item.id
+                      }" style="background: none; border: none; color: var(--wolf-gray); cursor: pointer; font-size: 0.9rem;">
+                        <i class="fas fa-plus-circle"></i>
+                      </button>
+                      <button class="remove-btn" data-id="${
+                        item.id
+                      }" style="background: none; border: none; color: #ff6b6b; cursor: pointer; margin-left: 10px; font-size: 0.9rem;">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div style="color: var(--action-green);">$${itemTotal.toFixed(
+                    2
+                  )}</div>
+                </li>
+              `;
+            });
+
+            cartHTML += "</ul>";
+            cartItems.innerHTML = cartHTML;
+            cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+            checkoutBtn.style.display = "inline-block";
+            clearCartBtn.style.display = "inline-block";
+            cartCount.textContent = itemCount.toString();
+
+            // Save cart to localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Add event listeners to the quantity and remove buttons
+            document.querySelectorAll(".quantity-btn.minus").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                decreaseQuantity(id);
+              });
+            });
+
+            document.querySelectorAll(".quantity-btn.plus").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                increaseQuantity(id);
+              });
+            });
+
+            document.querySelectorAll(".remove-btn").forEach((btn) => {
+              btn.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                removeFromCart(id);
+              });
+            });
+          }
+        }
+
+        // Function to increase item quantity
+        function increaseQuantity(id) {
+          const item = cart.find((item) => item.id === id);
+          if (item) {
+            // Check if more stock is available
+            if (isInStock(id)) {
+              // Decrease stock level
+              if (decreaseStock(id, 1)) {
+                item.quantity += 1;
+                updateCartDisplay();
+
+                // Update product displays
+                updateFeaturedProductStock();
+                updateProductGrid();
+              } else {
+                showNotification(`Sorry, no more ${item.name} in stock.`);
+              }
+            } else {
+              showNotification(`Sorry, no more ${item.name} in stock.`);
+            }
+          }
+        }
+
+        // Function to decrease item quantity
+        function decreaseQuantity(id) {
+          const item = cart.find((item) => item.id === id);
+          if (item) {
+            item.quantity -= 1;
+
+            // Increase stock level
+            increaseStock(id, 1);
+
+            if (item.quantity <= 0) {
+              removeFromCart(id);
+            } else {
+              showNotification(`Decreased quantity of ${item.name}`);
+              updateCartDisplay();
+
+              // Update product displays
+              updateFeaturedProductStock();
+              updateProductGrid();
+            }
+          }
+        }
+
+        // Function to remove an item from the cart
+        function removeFromCart(id) {
+          const item = cart.find((item) => item.id === id);
+          if (item) {
+            // Return items to inventory
+            increaseStock(id, item.quantity);
+
+            showNotification(`${item.name} removed from cart`);
+            cart = cart.filter((item) => item.id !== id);
+            updateCartDisplay();
+
+            // Update product displays
+            updateFeaturedProductStock();
+            updateProductGrid();
+          }
+        }
+
+        // Add image error handlers to featured product images
+        document.querySelectorAll(".featured-slide img").forEach((img) => {
+          img.onerror = function () {
+            handleImageError(this);
+          };
+        });
+
+        // Image zoom functionality
+        const imageZoomModal = document.getElementById("image-zoom-modal");
+        const zoomedImage = document.getElementById("zoomed-image");
+        const zoomCloseBtn = document.getElementById("zoom-close-btn");
+
+        // Function to zoom an image
+        function zoomImage(src, alt) {
+          zoomedImage.src = src;
+          zoomedImage.alt = alt || "Zoomed product image";
+
+          // Show the modal
+          imageZoomModal.classList.add("show");
+
+          // Prevent scrolling on the body
+          document.body.style.overflow = "hidden";
+        }
+
+        // Close the zoom modal when the close button is clicked
+        zoomCloseBtn.addEventListener("click", closeZoomModal);
+
+        // Close the zoom modal when clicking outside the image
+        imageZoomModal.addEventListener("click", function (event) {
+          if (event.target === imageZoomModal) {
+            closeZoomModal();
+          }
+        });
+
+        // Close the zoom modal when ESC key is pressed
+        document.addEventListener("keydown", function (event) {
+          if (
+            event.key === "Escape" &&
+            imageZoomModal.classList.contains("show")
+          ) {
+            closeZoomModal();
+          }
+        });
+
+        // Function to close the zoom modal
+        function closeZoomModal() {
+          imageZoomModal.classList.remove("show");
+
+          // Re-enable scrolling on the body
+          document.body.style.overflow = "";
+
+          // Clear the image src after transition
+          setTimeout(() => {
+            zoomedImage.src = "";
+          }, 300);
+        }
+
+        // Add zoom functionality to featured product images
+        document.querySelectorAll(".featured-slide img").forEach((img) => {
+          img.style.cursor = "zoom-in";
+          img.addEventListener("click", function () {
+            zoomImage(this.src, this.alt);
+          });
+        });
+
+        // Function to test image URLs in the inventory
+        function testInventoryImages() {
+          // Get all products
+          const products = getAllProducts();
+
+          // Test each product's image URL
+          products.forEach((product) => {
+            const imageUrl = product.image;
+            const validatedUrl = validateImageUrl(imageUrl);
+
+            // Create a test image element to check if the URL loads
+            const testImg = new Image();
+            testImg.onload = function () {
+              // Image loaded successfully
+            };
+            testImg.onerror = function () {
+              // Image failed to load, fallback will be used
+            };
+
+            // Set the source to trigger the load/error event
+            if (validatedUrl) {
+              testImg.src = validatedUrl;
+            }
+          });
+        }
+
+        // Function to show inventory debug panel
+        function showInventoryDebugPanel() {
+          console.log("Showing inventory debug panel");
+
+          // Create a debug panel if it doesn't exist
+          let debugPanel = document.getElementById("inventory-debug-panel");
+          if (!debugPanel) {
+            debugPanel = document.createElement("div");
+            debugPanel.id = "inventory-debug-panel";
+            debugPanel.style.position = "fixed";
+            debugPanel.style.top = "50%";
+            debugPanel.style.left = "50%";
+            debugPanel.style.transform = "translate(-50%, -50%)";
+            debugPanel.style.backgroundColor = "rgba(0, 0, 0, 0.9)";
+            debugPanel.style.color = "#00ff00";
+            debugPanel.style.padding = "20px";
+            debugPanel.style.borderRadius = "5px";
+            debugPanel.style.fontFamily = "monospace";
+            debugPanel.style.fontSize = "14px";
+            debugPanel.style.whiteSpace = "pre-wrap";
+            debugPanel.style.overflow = "auto";
+            debugPanel.style.maxHeight = "80vh";
+            debugPanel.style.maxWidth = "80vw";
+            debugPanel.style.zIndex = "1000";
+
+            const closeBtn = document.createElement("button");
+            closeBtn.textContent = "Close";
+            closeBtn.style.backgroundColor = "#4cbb17";
+            closeBtn.style.color = "white";
+            closeBtn.style.border = "none";
+            closeBtn.style.padding = "8px 16px";
+            closeBtn.style.borderRadius = "4px";
+            closeBtn.style.marginBottom = "10px";
+            closeBtn.style.cursor = "pointer";
+            closeBtn.addEventListener("click", () => {
+              document.body.removeChild(debugPanel);
+            });
+
+            debugPanel.appendChild(closeBtn);
+
+            // Add inventory table
+            const inventoryTable = document.createElement("table");
+            inventoryTable.style.width = "100%";
+            inventoryTable.style.borderCollapse = "collapse";
+            inventoryTable.style.marginTop = "10px";
+
+            // Add table header
+            const tableHeader = document.createElement("thead");
+            tableHeader.innerHTML = `
+              <tr>
+                <th style="border: 1px solid #333; padding: 8px; text-align: left;">ID</th>
+                <th style="border: 1px solid #333; padding: 8px; text-align: left;">Name</th>
+                <th style="border: 1px solid #333; padding: 8px; text-align: left;">Price</th>
+                <th style="border: 1px solid #333; padding: 8px; text-align: left;">Stock</th>
+                <th style="border: 1px solid #333; padding: 8px; text-align: left;">Image URL</th>
+              </tr>
+            `;
+            inventoryTable.appendChild(tableHeader);
+
+            // Add table body
+            const tableBody = document.createElement("tbody");
+
+            // Get all products
+            const products = getAllProducts();
+
+            // Add a row for each product
+            products.forEach((product) => {
+              const row = document.createElement("tr");
+
+              // Format the image URL for display
+              let imageUrl = product.image || "N/A";
+              if (imageUrl.length > 30) {
+                imageUrl = imageUrl.substring(0, 30) + "...";
+              }
+
+              row.innerHTML = `
+                <td style="border: 1px solid #333; padding: 8px;">${
+                  product.id
+                }</td>
+                <td style="border: 1px solid #333; padding: 8px;">${
+                  product.name
+                }</td>
+                <td style="border: 1px solid #333; padding: 8px;">$${
+                  typeof product.price === "number"
+                    ? product.price.toFixed(2)
+                    : product.price
+                }</td>
+                <td style="border: 1px solid #333; padding: 8px;">${
+                  product.stock
+                }</td>
+                <td style="border: 1px solid #333; padding: 8px;" title="${
+                  product.image
+                }">${imageUrl}</td>
+              `;
+
+              tableBody.appendChild(row);
+            });
+
+            inventoryTable.appendChild(tableBody);
+            debugPanel.appendChild(inventoryTable);
+
+            document.body.appendChild(debugPanel);
+          } else {
+            // If the panel already exists, just make it visible
+            debugPanel.style.display = "block";
+          }
+        }
+
+        // Initialize the store when the document is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+          // Load inventory data
+          loadInventory().then(() => {
+            // Test image URLs
+            testInventoryImages();
+
+            // Update product displays
+            updateFeaturedProductStock();
+            updateProductGrid();
+          });
+
+          // Add event listener for the show inventory button
+          document
+            .getElementById("show-inventory-btn")
+            .addEventListener("click", function () {
+              showInventoryDebugPanel();
+            });
+
+          // Add event listener for the test images button
+          document
+            .getElementById("test-images-btn")
+            .addEventListener("click", function () {
+              // Create a modal for image testing
+              const modal = document.createElement("div");
+              modal.className = "modal";
+              modal.innerHTML = `
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3>Image URL Tester</h3>
+                    <button class="close-btn">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Test an image URL to see if it works with the store:</p>
+                    <input type="text" id="test-image-url" placeholder="https://example.com/images/product.jpg" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                    <button id="test-url-btn" style="margin-bottom: 20px;">Test URL</button>
+
+                    <div id="test-result" style="display: flex; margin-top: 20px;">
+                      <div style="flex: 1; padding: 10px;">
+                        <h4>Original URL</h4>
+                        <div id="original-image-container" style="height: 150px; border: 1px solid #333; display: flex; align-items: center; justify-content: center;">
+                          <img id="original-image" src="assets/store/default-deck.svg" alt="Original Image" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                        <p id="original-status">No image URL provided</p>
+                      </div>
+                      <div style="flex: 1; padding: 10px;">
+                        <h4>Validated URL</h4>
+                        <div id="validated-image-container" style="height: 150px; border: 1px solid #333; display: flex; align-items: center; justify-content: center;">
+                          <img id="validated-image" src="assets/store/default-deck.svg" alt="Validated Image" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                        <p id="validated-status">No image URL provided</p>
+                      </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                      <h4>Google Drive URL Converter</h4>
+                      <p>Convert a Google Drive sharing link to a usable image URL:</p>
+                      <input type="text" id="drive-url-input" placeholder="https://drive.google.com/file/d/YOUR_FILE_ID/view" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                      <button id="convert-url-btn">Convert URL</button>
+                      <div style="margin-top: 10px;">
+                        <p>Converted URL:</p>
+                        <input type="text" id="converted-url" readonly style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                        <button id="copy-url-btn">Copy URL</button>
+                        <button id="use-converted-url-btn">Use This URL</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+
+              document.body.appendChild(modal);
+
+              // Add event listeners for the modal
+              const closeBtn = modal.querySelector(".close-btn");
+              closeBtn.addEventListener("click", function () {
+                document.body.removeChild(modal);
+              });
+
+              // Test URL button
+              const testUrlBtn = document.getElementById("test-url-btn");
+              testUrlBtn.addEventListener("click", function () {
+                const imageUrl = document
+                  .getElementById("test-image-url")
+                  .value.trim();
+                const originalImage = document.getElementById("original-image");
+                const validatedImage =
+                  document.getElementById("validated-image");
+                const originalStatus =
+                  document.getElementById("original-status");
+                const validatedStatus =
+                  document.getElementById("validated-status");
+
+                if (!imageUrl) {
+                  originalStatus.textContent = "Please enter an image URL";
+                  validatedStatus.textContent = "Please enter an image URL";
+                  originalImage.src = "assets/store/default-deck.svg";
+                  validatedImage.src = "assets/store/default-deck.svg";
+                  return;
+                }
+
+                // Test original URL
+                originalStatus.textContent = "Loading...";
+                originalImage.onload = function () {
+                  originalStatus.textContent = "Image loaded successfully!";
+                  originalStatus.style.color = "#4cbb17";
+                };
+                originalImage.onerror = function () {
+                  originalStatus.textContent = "Error loading image";
+                  originalStatus.style.color = "#ff4c4c";
+                  originalImage.src = "assets/store/default-deck.svg";
+                };
+                originalImage.src = imageUrl;
+
+                // Test validated URL
+                const validatedUrl = validateImageUrl(imageUrl);
+                validatedStatus.textContent = "Loading...";
+                validatedImage.onload = function () {
+                  validatedStatus.textContent = "Image loaded successfully!";
+                  validatedStatus.style.color = "#4cbb17";
+                };
+                validatedImage.onerror = function () {
+                  validatedStatus.textContent = "Error loading image";
+                  validatedStatus.style.color = "#ff4c4c";
+                  validatedImage.src = "assets/store/default-deck.svg";
+                };
+                validatedImage.src =
+                  validatedUrl || "assets/store/default-deck.svg";
+
+                if (!validatedUrl) {
+                  validatedStatus.textContent = "Invalid URL format";
+                  validatedStatus.style.color = "#ff4c4c";
+                }
+              });
+
+              // Google Drive URL converter
+              const convertUrlBtn = document.getElementById("convert-url-btn");
+              convertUrlBtn.addEventListener("click", function () {
+                const driveUrl = document
+                  .getElementById("drive-url-input")
+                  .value.trim();
+                const convertedUrlInput =
+                  document.getElementById("converted-url");
+
+                if (!driveUrl) {
+                  convertedUrlInput.value = "";
+                  return;
+                }
+
+                // Extract file ID from various Google Drive URL formats
+                let fileId = "";
+
+                // Format: https://drive.google.com/file/d/FILE_ID/view
+                const fileRegex = /\/file\/d\/([^\/]+)/;
+                const fileMatch = driveUrl.match(fileRegex);
+
+                // Format: https://drive.google.com/open?id=FILE_ID
+                const openRegex = /[?&]id=([^&]+)/;
+                const openMatch = driveUrl.match(openRegex);
+
+                if (fileMatch && fileMatch[1]) {
+                  fileId = fileMatch[1];
+                } else if (openMatch && openMatch[1]) {
+                  fileId = openMatch[1];
+                } else {
+                  convertedUrlInput.value = "Invalid Google Drive URL format";
+                  return;
+                }
+
+                // Create the direct access URL
+                const convertedUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                convertedUrlInput.value = convertedUrl;
+              });
+
+              // Copy URL button
+              const copyUrlBtn = document.getElementById("copy-url-btn");
+              copyUrlBtn.addEventListener("click", function () {
+                const convertedUrl = document.getElementById("converted-url");
+                convertedUrl.select();
+                document.execCommand("copy");
+
+                // Show feedback
+                this.textContent = "Copied!";
+                setTimeout(() => {
+                  this.textContent = "Copy URL";
+                }, 2000);
+              });
+
+              // Use converted URL button
+              const useConvertedUrlBtn = document.getElementById(
+                "use-converted-url-btn"
+              );
+              useConvertedUrlBtn.addEventListener("click", function () {
+                const convertedUrl =
+                  document.getElementById("converted-url").value;
+                if (convertedUrl && !convertedUrl.includes("Invalid")) {
+                  document.getElementById("test-image-url").value =
+                    convertedUrl;
+                  document.getElementById("test-url-btn").click();
+                }
+              });
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

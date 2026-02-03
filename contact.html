@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - AntiTarheel</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Orbitron:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+      /* Additional styles specific to contact page */
+      .contact-section {
+        padding: 80px 0;
+      }
+
+      .contact-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .contact-info {
+        padding: 30px;
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        border: 1px solid var(--wolf-gray);
+      }
+
+      .contact-info h3 {
+        font-family: var(--secondary-font);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: var(--action-green);
+      }
+
+      .contact-info p {
+        margin-bottom: 20px;
+        color: var(--wolf-gray);
+      }
+
+      .contact-method {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .contact-method i {
+        font-size: 1.5rem;
+        color: var(--action-green);
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+      }
+
+      .contact-form {
+        padding: 30px;
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        border: 1px solid var(--wolf-gray);
+      }
+
+      .contact-form h3 {
+        font-family: var(--secondary-font);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: var(--action-green);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--wolf-gray);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        font-family: var(--primary-font);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--action-green);
+        box-shadow: 0 0 0 2px rgba(105, 190, 40, 0.3);
+      }
+
+      .form-group input.invalid,
+      .form-group textarea.invalid {
+        border-color: #ff4d4d;
+      }
+
+      .error-message {
+        color: #ff4d4d;
+        font-size: 0.9rem;
+        margin-top: 5px;
+      }
+
+      .success-message {
+        color: var(--action-green);
+        font-size: 1rem;
+        margin-top: 15px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .form-submit {
+        text-align: right;
+      }
+
+      @media screen and (max-width: 768px) {
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Navigation Icons */
+      .nav-icons {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+      }
+
+      .cart-icon-container {
+        position: relative;
+      }
+
+      #cart-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #cart-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        font-size: 0.7rem;
+        font-weight: bold;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .help-icon-container {
+        margin-left: 15px;
+        position: relative;
+      }
+
+      #help-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #help-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      /* Responsive styles for navigation icons */
+      @media screen and (max-width: 768px) {
+        .nav-icons {
+          position: absolute;
+          right: 60px;
+          top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-container">
+      <!-- Background will be added via CSS -->
+    </div>
+
+    <header>
+      <div class="logo">
+        <h1>AntiTarheel</h1>
+      </div>
+      <nav>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html" id="nav-home">Home</a></li>
+          <li><a href="commands.html" id="nav-commands">Commands</a></li>
+          <li>
+            <a href="new-wagers-bay.html" id="nav-wagers">New Wagers Bay</a>
+          </li>
+          <li><a href="discord.html" id="nav-discord">Discord</a></li>
+          <li><a href="store.html" id="nav-store">Store</a></li>
+        </ul>
+        <div class="nav-icons">
+          <div class="cart-icon-container">
+            <a href="store.html#cart-section" id="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </div>
+          <div class="help-icon-container">
+            <a href="contact.html" id="help-icon" title="Help">
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="contact-section">
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>Get In Touch</h3>
+            <p>
+              Have questions, suggestions, or just want to say hello? Feel free
+              to reach out using the form or through any of the methods below.
+            </p>
+
+            <div class="contact-method">
+              <i class="fas fa-envelope"></i>
+              <span>chad@antitarheel.com</span>
+            </div>
+
+            <div class="contact-method">
+              <i class="fab fa-discord"></i>
+              <span>Join our Discord community</span>
+            </div>
+
+            <div class="contact-method">
+              <i class="fab fa-twitch"></i>
+              <span>Follow on Twitch</span>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3>Send a Message</h3>
+            <form id="contact-form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your email address"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Type your message here..."
+                ></textarea>
+              </div>
+
+              <div class="form-submit">
+                <button type="submit" class="btn primary-btn">
+                  Send Message
+                </button>
+              </div>
+
+              <div id="form-status"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>AntiTarheel</h2>
+          <p>Twitch Streamer & Content Creator</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="commands.html">Commands</a></li>
+            <li><a href="new-wagers-bay.html">New Wagers Bay</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h3>Connect</h3>
+          <div class="social-icons">
+            <a href="https://www.twitch.tv/antitarheel" target="_blank"
+              ><i class="fab fa-twitch"></i
+            ></a>
+            <a href="https://discord.com/invite/yJDmPAMQMy" target="_blank"
+              ><i class="fab fa-discord"></i
+            ></a>
+            <a href="https://www.youtube.com/@Antitarheel" target="_blank"
+              ><i class="fab fa-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 AntiTarheel. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize cart count from localStorage if available
+        const cartCount = document.getElementById("cart-count");
+        if (cartCount) {
+          const savedCart = localStorage.getItem("cart");
+          if (savedCart) {
+            const cart = JSON.parse(savedCart);
+            let itemCount = 0;
+            cart.forEach((item) => {
+              itemCount += item.quantity;
+            });
+            cartCount.textContent = itemCount.toString();
+          } else {
+            cartCount.textContent = "0";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

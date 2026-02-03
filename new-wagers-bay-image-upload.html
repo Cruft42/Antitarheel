@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Wagers Bay Image Upload - AntiTarheel</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Orbitron:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Additional styles specific to New Wagers Bay Image Upload page */
+      .upload-section {
+        padding: 80px 0;
+      }
+
+      .upload-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .upload-intro {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .upload-intro h3 {
+        font-family: var(--secondary-font);
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--action-green);
+      }
+
+      .upload-intro p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 30px;
+        color: var(--wolf-gray);
+      }
+
+      /* Form Styles */
+      .upload-form-container {
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        padding: 30px;
+        border: 1px solid var(--wolf-gray);
+        margin-bottom: 60px;
+      }
+
+      .upload-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-size: 1.1rem;
+        color: var(--action-green);
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 12px 15px;
+        border-radius: 5px;
+        border: 1px solid var(--wolf-gray);
+        background-color: rgba(0, 0, 0, 0.2);
+        color: var(--white);
+        font-family: var(--primary-font);
+        font-size: 1rem;
+      }
+
+      .form-group input[type="file"] {
+        padding: 10px;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--action-green);
+      }
+
+      .submit-btn {
+        margin-top: 20px;
+        padding: 14px 30px;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        border: none;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: center;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .submit-btn:disabled {
+        background-color: var(--wolf-gray);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* Preview Styles */
+      .preview-container {
+        background-color: rgba(0, 34, 68, 0.8);
+        border-radius: 10px;
+        padding: 30px;
+        border: 1px solid var(--wolf-gray);
+      }
+
+      .preview-title {
+        font-family: var(--secondary-font);
+        font-size: 1.8rem;
+        color: var(--action-green);
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .image-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .preview-item {
+        position: relative;
+        height: 200px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--wolf-gray);
+      }
+
+      .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .remove-preview {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: var(--white);
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .remove-preview:hover {
+        background-color: var(--action-green);
+        color: var(--college-navy);
+      }
+
+      .status-message {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: 600;
+        display: none;
+      }
+
+      .status-success {
+        background-color: rgba(105, 190, 40, 0.2);
+        color: var(--action-green);
+        border: 1px solid var(--action-green);
+        display: block;
+      }
+
+      .status-error {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+        border: 1px solid #dc3545;
+        display: block;
+      }
+
+      /* Navigation Icons */
+      .nav-icons {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+      }
+
+      .cart-icon-container {
+        position: relative;
+      }
+
+      #cart-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #cart-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--action-green);
+        color: var(--college-navy);
+        font-size: 0.7rem;
+        font-weight: bold;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .help-icon-container {
+        margin-left: 15px;
+        position: relative;
+      }
+
+      #help-icon {
+        font-size: 1.3rem;
+        color: var(--white);
+        position: relative;
+        display: inline-block;
+        padding: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #help-icon:hover {
+        color: var(--action-green);
+        transform: scale(1.1);
+      }
+
+      /* Navigation and dropdown styles */
+      .nav-menu li {
+        position: relative;
+      }
+      
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: rgba(0, 34, 68, 0.95);
+        border: 1px solid var(--wolf-gray);
+        border-radius: 0 0 5px 5px;
+        min-width: 200px;
+        padding: 10px 0;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+      }
+      
+      .nav-menu li:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      
+      .dropdown-menu li {
+        display: block;
+        width: 100%;
+      }
+      
+      .dropdown-menu a {
+        display: block;
+        padding: 10px 20px;
+        color: var(--white);
+        font-size: 0.9rem;
+      }
+      
+      .dropdown-menu a:hover {
+        background-color: rgba(105, 190, 40, 0.2);
+      }
+      
+      .nav-menu .dropdown-toggle {
+        position: relative;
+        padding-right: 18px;
+      }
+      
+      .nav-menu .dropdown-toggle::after {
+        content: '\f078';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 0.7rem;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s ease;
+      }
+      
+      .nav-menu li:hover .dropdown-toggle::after {
+        transform: translateY(-50%) rotate(180deg);
+      }
+      
+      @media screen and (max-width: 768px) {
+        .dropdown-menu {
+          position: static;
+          opacity: 1;
+          visibility: visible;
+          transform: none;
+          background-color: transparent;
+          border: none;
+          min-width: auto;
+          padding: 0 0 0 20px;
+          display: none;
+        }
+        
+        .dropdown-menu.active {
+          display: block;
+        }
+        
+        .dropdown-menu a {
+          padding: 8px 15px;
+        }
+        
+        .nav-menu .dropdown-toggle::after {
+          right: 15px;
+        }
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        .upload-intro h3 {
+          font-size: 2rem;
+        }
+        
+        .upload-intro p {
+          font-size: 1rem;
+        }
+        
+        .upload-form-container, 
+        .preview-container {
+          padding: 20px;
+        }
+        
+        .preview-title {
+          font-size: 1.5rem;
+        }
+        
+        .image-preview {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+        
+        .preview-item {
+          height: 150px;
+        }
+        
+        .nav-icons {
+          position: absolute;
+          right: 60px;
+          top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-container">
+      <!-- Background will be added via CSS -->
+    </div>
+
+    <header>
+      <div class="logo">
+        <h1>AntiTarheel</h1>
+      </div>
+      <nav>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html" id="nav-home">Home</a></li>
+          <li><a href="commands.html" id="nav-commands">Commands</a></li>
+          <li>
+            <a href="new-wagers-bay.html" id="nav-wagers" class="active">New Wagers Bay</a>
+          </li>
+          <li><a href="discord.html" id="nav-discord">Discord</a></li>
+          <li><a href="store.html" id="nav-store">Store</a></li>
+        </ul>
+        <div class="nav-icons">
+          <div class="cart-icon-container">
+            <a href="store.html#cart-section" id="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </div>
+          <div class="help-icon-container">
+            <a href="contact.html" id="help-icon" title="Help">
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="upload-section">
+        <div class="upload-container">
+          <div class="upload-intro">
+            <h3>New Wagers Bay Image Upload</h3>
+            <p>
+              Upload your Wagers Bay images to be displayed on the calendar. Select a date and upload one or multiple images.
+            </p>
+          </div>
+
+          <div class="upload-form-container">
+            <form id="upload-form" class="upload-form">
+              <div class="form-group">
+                <label for="upload-date">Select Date</label>
+                <input type="date" id="upload-date" name="upload-date" required>
+              </div>
+              <div class="form-group">
+                <label for="image-files">Upload Images (multiple images allowed)</label>
+                <input type="file" id="image-files" name="image-files" accept="image/*" multiple required>
+              </div>
+              <button type="submit" class="submit-btn" id="submit-btn">Upload Images</button>
+            </form>
+            <div id="status-message" class="status-message"></div>
+          </div>
+
+          <div class="preview-container">
+            <h3 class="preview-title">Image Preview</h3>
+            <div id="image-preview" class="image-preview">
+              <!-- Preview images will be displayed here -->
+              <div id="no-preview-message" style="grid-column: 1 / -1; text-align: center; color: var(--wolf-gray);">
+                No images selected for preview
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>AntiTarheel</h2>
+          <p>Twitch Streamer & Content Creator</p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="commands.html">Commands</a></li>
+            <li><a href="new-wagers-bay.html">New Wagers Bay</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h3>Connect</h3>
+          <div class="social-icons">
+            <a href="https://www.twitch.tv/antitarheel" target="_blank"
+              ><i class="fab fa-twitch"></i
+            ></a>
+            <a href="https://discord.com/invite/yJDmPAMQMy" target="_blank"
+              ><i class="fab fa-discord"></i
+            ></a>
+            <a href="https://www.youtube.com/@Antitarheel" target="_blank"
+              ><i class="fab fa-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 AntiTarheel. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize cart count from localStorage if available
+        const cartCount = document.getElementById("cart-count");
+        if (cartCount) {
+          const savedCart = localStorage.getItem("cart");
+          if (savedCart) {
+            const cart = JSON.parse(savedCart);
+            let itemCount = 0;
+            cart.forEach((item) => {
+              itemCount += item.quantity;
+            });
+            cartCount.textContent = itemCount.toString();
+          } else {
+            cartCount.textContent = "0";
+          }
+        }
+        
+        // Image upload functionality
+        const uploadForm = document.getElementById('upload-form');
+        const imageInput = document.getElementById('image-files');
+        const dateInput = document.getElementById('upload-date');
+        const imagePreview = document.getElementById('image-preview');
+        const noPreviewMessage = document.getElementById('no-preview-message');
+        const statusMessage = document.getElementById('status-message');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        // Set default date to today
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        // No minimum date restriction to allow past dates
+        
+        // Preview selected images
+        imageInput.addEventListener('change', function() {
+          // Clear previous previews
+          while (imagePreview.firstChild) {
+            imagePreview.removeChild(imagePreview.firstChild);
+          }
+          
+          // If no files selected, show message
+          if (this.files.length === 0) {
+            imagePreview.appendChild(noPreviewMessage);
+            return;
+          }
+          
+          // Hide no preview message
+          if (imagePreview.contains(noPreviewMessage)) {
+            imagePreview.removeChild(noPreviewMessage);
+          }
+          
+          // Display each selected image
+          Array.from(this.files).forEach((file, index) => {
+            // Create preview container
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            previewItem.dataset.index = index;
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.onload = () => URL.revokeObjectURL(img.src);
+            
+            // Create remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-preview';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', function() {
+              // Remove this image from the preview
+              previewItem.remove();
+              
+              // Create a new FileList without this file
+              // Note: FileList is immutable, so we need a workaround
+              const dt = new DataTransfer();
+              const files = imageInput.files;
+              
+              for (let i = 0; i < files.length; i++) {
+                if (i !== index) {
+                  dt.items.add(files[i]);
+                }
+              }
+              
+              // Update the file input
+              // Note: This is a workaround and may not work in all browsers
+              try {
+                imageInput.files = dt.files;
+                
+                // If no files left, show no preview message
+                if (imageInput.files.length === 0) {
+                  imagePreview.appendChild(noPreviewMessage);
+                }
+              } catch (e) {
+                // Fallback if the above doesn't work
+                console.error('Could not remove file from input:', e);
+                statusMessage.textContent = 'Please reselect your files excluding the one you wanted to remove';
+                statusMessage.className = 'status-message status-error';
+              }
+            });
+            
+            // Add elements to the preview
+            previewItem.appendChild(img);
+            previewItem.appendChild(removeBtn);
+            imagePreview.appendChild(previewItem);
+          });
+        });
+        
+        // Handle form submission
+        uploadForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Validate form
+          if (!dateInput.value) {
+            statusMessage.textContent = 'Please select a date';
+            statusMessage.className = 'status-message status-error';
+            return;
+          }
+          
+          if (imageInput.files.length === 0) {
+            statusMessage.textContent = 'Please select at least one image';
+            statusMessage.className = 'status-message status-error';
+            return;
+          }
+          
+          // Disable submit button while processing
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Uploading...';
+          
+          // Create FormData object
+          const formData = new FormData();
+          
+          // Add date parameter first
+          formData.append('date', dateInput.value);
+          console.log('Adding date parameter:', dateInput.value);
+          
+          // Add each file to FormData
+          for (let i = 0; i < imageInput.files.length; i++) {
+            formData.append('images[]', imageInput.files[i]);
+            console.log(`Adding image ${i+1}:`, imageInput.files[i].name);
+          }
+          
+          // Log the count of files being sent
+          console.log(`Sending ${imageInput.files.length} files to the server`);
+          
+          // Send data to server with longer timeout
+          fetch('uploader.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            // Check if response is ok
+            if (!response.ok) {
+              throw new Error(`Server responded with status: ${response.status}`);
+            }
+            
+            // Get the response as text first
+            return response.text().then(text => {
+              try {
+                // Try to parse as JSON
+                return JSON.parse(text);
+              } catch (e) {
+                // If parsing fails, return an error object with the raw text
+                return { 
+                  success: false, 
+                  message: `Failed to parse server response: ${e.message}`,
+                  raw_response: text.substring(0, 500) + (text.length > 500 ? '...' : '')
+                };
+              }
+            });
+          })
+          .then(data => {
+            if (data.success) {
+              // Show success message
+              statusMessage.textContent = data.message || 'Images uploaded successfully!';
+              statusMessage.className = 'status-message status-success';
+              
+              // Reset form
+              uploadForm.reset();
+              
+              // Set default date to today
+              dateInput.value = `${yyyy}-${mm}-${dd}`;
+              
+              // Clear preview
+              while (imagePreview.firstChild) {
+                imagePreview.removeChild(imagePreview.firstChild);
+              }
+              imagePreview.appendChild(noPreviewMessage);
+              
+              // Update image-locations.js
+              updateImageLocations(data.date, data.filePaths);
+            } else {
+              // Show error message
+              statusMessage.textContent = data.message || 'Error uploading images';
+              statusMessage.className = 'status-message status-error';
+            }
+          })
+          .catch(error => {
+            // Show error message
+            statusMessage.textContent = 'Error: ' + error.message;
+            statusMessage.className = 'status-message status-error';
+            console.error('Error:', error);
+          })
+          .finally(() => {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Upload Images';
+          });
+        });
+        
+        // Function to update image-locations.js (would typically be done on the server)
+        function updateImageLocations(date, filePaths) {
+          // In a real implementation, this would be handled by the server
+          console.log('Server would update image-locations.js with:', date, filePaths);
+        }
+      });
+    </script>
+  </body>
+</html> 

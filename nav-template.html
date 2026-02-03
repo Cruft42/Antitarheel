@@ -1,0 +1,146 @@
+<!-- Navigation Template for All Pages -->
+<!-- Copy this navigation section to all pages to ensure consistency -->
+
+<header>
+  <div class="logo">
+    <h1>AntiTarheel</h1>
+  </div>
+  <nav>
+    <div class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="index.html" id="nav-home">Home</a></li>
+      <li><a href="commands.html" id="nav-commands">Commands</a></li>
+      <li><a href="new-wagers-bay.html" id="nav-wagers">New Wagers Bay</a></li>
+      <li><a href="discord.html" id="nav-discord">Discord</a></li>
+      <li><a href="store.html" id="nav-store">Store</a></li>
+    </ul>
+    <div class="nav-icons">
+      <div class="cart-icon-container">
+        <a href="store.html#cart-section" id="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+      </div>
+      <div class="help-icon-container">
+        <a href="contact.html" id="help-icon" title="Help">
+          <i class="fas fa-question-circle"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- CSS Styles to Add to All Pages -->
+<!--
+Add these styles to the CSS section of all pages:
+
+/* Navigation Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.cart-icon-container {
+  position: relative;
+}
+
+#cart-icon {
+  font-size: 1.3rem;
+  color: var(--white);
+  position: relative;
+  display: inline-block;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+#cart-icon:hover {
+  color: var(--action-green);
+  transform: scale(1.1);
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--action-green);
+  color: var(--college-navy);
+  font-size: 0.7rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.help-icon-container {
+  margin-left: 15px;
+  position: relative;
+}
+
+#help-icon {
+  font-size: 1.3rem;
+  color: var(--white);
+  position: relative;
+  display: inline-block;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+#help-icon:hover {
+  color: var(--action-green);
+  transform: scale(1.1);
+}
+
+/* Responsive styles for navigation icons */
+@media screen and (max-width: 768px) {
+  .nav-icons {
+    position: absolute;
+    right: 60px;
+    top: 20px;
+  }
+}
+-->
+
+<!-- JavaScript to Add to All Pages -->
+<!--
+Add this JavaScript to initialize the cart count on all pages:
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Set active navigation link
+  const currentPage = window.location.pathname.split("/").pop();
+  
+  if (currentPage === "index.html" || currentPage === "") {
+    document.getElementById("nav-home").classList.add("active");
+  } else if (currentPage === "commands.html") {
+    document.getElementById("nav-commands").classList.add("active");
+  } else if (currentPage === "new-wagers-bay.html") {
+    document.getElementById("nav-wagers").classList.add("active");
+  } else if (currentPage === "discord.html") {
+    document.getElementById("nav-discord").classList.add("active");
+  } else if (currentPage === "store.html") {
+    document.getElementById("nav-store").classList.add("active");
+  }
+  
+  // Initialize cart count from localStorage if available
+  const cartCount = document.getElementById("cart-count");
+  if (cartCount) {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      const cart = JSON.parse(savedCart);
+      let itemCount = 0;
+      cart.forEach(item => {
+        itemCount += item.quantity;
+      });
+      cartCount.textContent = itemCount.toString();
+    } else {
+      cartCount.textContent = "0";
+    }
+  }
+});
+-->

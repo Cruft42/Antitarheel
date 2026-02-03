@@ -1,0 +1,35 @@
+# Ignore uploaded images and runtime assets
+assets/images/wagers-bay-dates/
+assets/images/wagers-bay-dates/**/*
+
+# Ignore backup and temp folders
+backup/
+Broken/
+
+# Ignore PHP runtime configs and local server files
+php/php.ini*
+php/*.local
+
+# Ignore any credentials or keys
+*.key
+*.pem
+*.p12
+*.jks
+Keystore/
+
+# Node / build artifacts (if any)
+node_modules/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.idea/
+
+# Don't accidentally commit sensitive files
+.env
+.env.local
+*.env
+
